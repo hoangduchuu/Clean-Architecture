@@ -20,6 +20,6 @@ interface ProjectsCache {
 
     fun areProjectsCached(): Single<Boolean>
 
-    fun setLastedCacheExpired() : Single<Boolean>
+    fun setLastedCacheExpired(currentTimeMillis: Long): Single<Boolean>
 
 }
