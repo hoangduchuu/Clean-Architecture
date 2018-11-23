@@ -13,7 +13,7 @@ open class UnBookParkProjectUseCase @Inject constructor(
         private val postExecutionThread: PostExecutionThread) : CompletableUseCase<UnBookParkProjectUseCase.Params>(postExecutionThread) {
 
     public override fun buildUseCaseCompletable(params: Params?): Completable {
-        if (params == null) throw IllegalArgumentException("Params can not be null")
+        if (params == null) throw IllegalArgumentException("Params can not be null") as Throwable
         return projectRepository.unBookMarkProject(params.projectID)
     }
 
