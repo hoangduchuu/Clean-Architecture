@@ -5,18 +5,25 @@ import grabteacher.com.domain.interactor.CompletableUseCase
 import grabteacher.com.domain.repository.ProjectRepository
 import io.reactivex.Completable
 import sun.awt.SunToolkit
+import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 open class UnBookParkProjectUseCase @Inject constructor(
         private val projectRepository: ProjectRepository,
         private val postExecutionThread: PostExecutionThread) : CompletableUseCase<UnBookParkProjectUseCase.Params>(postExecutionThread) {
 
-    override fun buildUseCaseCompletable(params: Params?): Completable {
-        if (params == null) throw SunToolkit.IllegalThreadException("Params can not be null")
+    public override fun buildUseCaseCompletable(params: Params?): Completable {
+        if (params == null) throw IllegalArgumentException("Params can not be null")
         return projectRepository.unBookMarkProject(params.projectID)
     }
 
-    data class Params constructor(val projectID: String)
+    data class Params constructor(val projectID: String){
+        companion object {
+            fun forProject(projectId: String): UnBookParkProjectUseCase.Params {
+                return UnBookParkProjectUseCase.Params(projectId)
+            }
+        }
+    }
 
 }
 
