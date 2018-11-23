@@ -22,4 +22,6 @@ interface ProjectsCache {
 
     fun setLastedCacheExpired(currentTimeMillis: Long): Single<Boolean>
 
+    fun isProjectsCacheExpired(): Single<Boolean>
+
 }
