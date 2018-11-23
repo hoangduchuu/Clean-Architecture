@@ -6,7 +6,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class ProjectCacheDataStoreImp @Inject constructor(var projectsCache: ProjectsCache) : ProjectDataStore {
+open class ProjectCacheDataStoreImp @Inject constructor(var projectsCache: ProjectsCache) : ProjectDataStore {
     override fun clearProjects(): Completable {
       return  projectsCache.clearCache()
     }

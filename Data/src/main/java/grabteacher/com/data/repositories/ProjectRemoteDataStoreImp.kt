@@ -6,7 +6,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class ProjectRemoteDataStoreImp @Inject constructor(var projectRemote: ProjectsRemote) : ProjectDataStore {
+open class ProjectRemoteDataStoreImp @Inject constructor(var projectRemote: ProjectsRemote) : ProjectDataStore {
     override fun getProjects(): Observable<List<ProjectEntity>> {
       return projectRemote.getProjects()
     }
