@@ -50,7 +50,7 @@ class ProjectsCacheDataStoreTest {
         val result=   stubProjectsCacheSaveProjects(Completable.complete())
       stubProjectsCacheSetLastCacheTime(Completable.complete())
         val testObserver = store.saveProjects(listOf(ProjectFactory.makeProjectEntity())).test()
-        
+
         testObserver.assertComplete()
     }
 
