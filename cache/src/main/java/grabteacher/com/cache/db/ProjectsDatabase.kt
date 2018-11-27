@@ -4,6 +4,8 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
+import grabteacher.com.cache.dao.CachedProjectsDao
+import grabteacher.com.cache.dao.ConfigDao
 import grabteacher.com.cache.models.CachedProject
 import grabteacher.com.cache.models.Config
 import javax.inject.Inject
@@ -11,6 +13,10 @@ import javax.inject.Inject
 @Database(entities = arrayOf(CachedProject::class,
         Config::class), version = 1)
 abstract class ProjectsDatabase @Inject constructor(): RoomDatabase() {
+
+    abstract fun cachedProjectsDao(): CachedProjectsDao
+
+    abstract fun configDao(): ConfigDao
 
     companion object {
 
