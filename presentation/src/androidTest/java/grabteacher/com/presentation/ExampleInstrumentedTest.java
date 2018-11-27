@@ -1,4 +1,4 @@
-package grabteacher.com.cache;
+package grabteacher.com.presentation;
 
 import android.content.Context;
 import androidx.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("grabteacher.com.cache.test", appContext.getPackageName());
+        assertEquals("grabteacher.com.presentation.test", appContext.getPackageName());
     }
 }
