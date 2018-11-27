@@ -76,13 +76,13 @@ dependencies {
     compile presentationDependencies.kotlin
     compile presentationDependencies.javaxInject
     compile presentationDependencies.rxKotlin
-    compile presentationDependencies.archRuntime
-    compile presentationDependencies.archExtensions
-    kapt presentationDependencies.archCompiler
+    compile 'androidx.lifecycle:lifecycle-runtime:2.0.0'
+    compile 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
 
     testCompile presentationTestDependencies.junit
     testCompile presentationTestDependencies.mockito
     testCompile presentationTestDependencies.assertj
     testCompile presentationTestDependencies.robolectric
-    testCompile presentationTestDependencies.archTesting
+    testCompile 'androidx.arch.core:core-testing:2.0.0'
 }
