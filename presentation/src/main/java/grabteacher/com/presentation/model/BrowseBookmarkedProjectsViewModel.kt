@@ -1,0 +1,57 @@
+package grabteacher.com.presentation.model
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import grabteacher.com.domain.model.Project
+import grabteacher.com.domain.usecase.BookParkProjectUseCase
+import grabteacher.com.domain.usecase.GetBookmarkedProjectsUseCase
+import grabteacher.com.domain.usecase.GetProjectUseCase
+import grabteacher.com.domain.usecase.UnBookParkProjectUseCase
+import grabteacher.com.presentation.mapper.ProjectViewMapper
+import grabteacher.com.presentation.state.Resource
+import grabteacher.com.presentation.state.ResourseState
+import io.reactivex.observers.DisposableCompletableObserver
+import io.reactivex.observers.DisposableObserver
+import javax.inject.Inject
+
+open class BrowseBookmarkedProjectsViewModel @Inject internal constructor(
+        private val getProjects: GetBookmarkedProjectsUseCase?,
+        private val bookmarkProject: BookParkProjectUseCase,
+        private val unBookmarkProject: UnBookParkProjectUseCase,
+        private val mapper: ProjectViewMapper): ViewModel() {
+
+    private val liveData: MutableLiveData<Resource<List<ProjectView>>> = MutableLiveData()
+
+    init {
+        fetchProjects()
+    }
+
+    override fun onCleared() {
+        getProjects?.dispose()
+        super.onCleared()
+    }
+
+    fun getProjects(): LiveData<Resource<List<ProjectView>>> {
+        return liveData
+    }
+
+    fun fetchProjects() {
+        liveData.postValue(Resource(ResourseState.LOADING, null, null))
+    }
+
+    inner class ProjectsSubscriber: DisposableObserver<List<Project>>() {
+        override fun onNext(t: List<Project>) {
+            liveData.postValue(Resource(ResourseState.SUCCESS,
+                    t.map { mapper.maptoView(it) }, null))
+        }
+
+        override fun onError(e: Throwable) {
+            liveData.postValue(Resource(ResourseState.ERROR, null,
+                    e.localizedMessage))
+        }
+
+        override fun onComplete() { }
+
+    }
+}
