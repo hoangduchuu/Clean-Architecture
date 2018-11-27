@@ -1,4 +1,4 @@
-package grabteacher.com.presentation
+package grabteacher.com.presentation.model
 
 
 class ProjectView(val id: String, val name: String, val fullName: String,
