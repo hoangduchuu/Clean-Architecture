@@ -1,18 +1,25 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 android {
-    compileSdkVersion 28
+    def globalConfiguration = rootProject.extensions.getByName("ext")
 
+    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
+    buildToolsVersion globalConfiguration["androidBuildToolsVersion"]
 
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion globalConfiguration["androidMinSdkVersion"]
+        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
+        multiDexEnabled = true
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
 
+
+    dexOptions {
+        preDexLibraries = false
+        dexInProcess = false
+        javaMaxHeapSize "4g"
     }
 
     buildTypes {
@@ -22,13 +29,60 @@ android {
         }
     }
 
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+
+
+    lintOptions {
+        quiet true
+        abortOnError false
+        ignoreWarnings true
+        disable 'InvalidPackage'            //Some libraries have issues with this.
+        disable 'OldTargetApi'              //Lint gives this warning but SDK 20 would be Android L Beta.
+        disable 'IconDensities'             //For testing purpose. This is safe to remove.
+        disable 'IconMissingDensityFolder'  //For testing purpose. This is safe to remove.
+    }
+
+
+    testOptions {
+        unitTests.all {
+            jvmArgs '-noverify'
+        }
+    }
+
+
+}
+
+kapt {
+    correctErrorTypes = true
+    generateStubs = true
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    def presentationDependencies = rootProject.ext.presentationDependencies
+    def presentationTestDependencies = rootProject.ext.presentationTestDependencies
+
+    compile project(':Domain') // NOTED
+
+    
+    compile presentationDependencies.kotlin
+    compile presentationDependencies.javaxInject
+    compile presentationDependencies.rxKotlin
+    compile presentationDependencies.archRuntime
+    compile presentationDependencies.archExtensions
+    kapt presentationDependencies.archCompiler
+
+    testCompile presentationTestDependencies.junit
+    testCompile presentationTestDependencies.mockito
+    testCompile presentationTestDependencies.assertj
+    testCompile presentationTestDependencies.robolectric
+    testCompile presentationTestDependencies.archTesting
 }
