@@ -27,7 +27,7 @@ abstract class ObservableUseCase<T, in Params> constructor(private var postExecu
         disposables.add(disposable)
     }
 
-    private fun dispose(){
+    fun dispose(){
         disposables.dispose()
     }
 
