@@ -70,19 +70,19 @@ dependencies {
     def presentationDependencies = rootProject.ext.presentationDependencies
     def presentationTestDependencies = rootProject.ext.presentationTestDependencies
 
-    compile project(':Domain') // NOTED
+    implementation project(':Domain') // NOTED
 
-    
-    compile presentationDependencies.kotlin
-    compile presentationDependencies.javaxInject
-    compile presentationDependencies.rxKotlin
-    compile 'androidx.lifecycle:lifecycle-runtime:2.0.0'
-    compile 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+
+    implementation presentationDependencies.kotlin
+    implementation presentationDependencies.javaxInject
+    implementation presentationDependencies.rxKotlin
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
 
-    testCompile presentationTestDependencies.junit
-    testCompile presentationTestDependencies.mockito
-    testCompile presentationTestDependencies.assertj
-    testCompile presentationTestDependencies.robolectric
-    testCompile 'androidx.arch.core:core-testing:2.0.0'
+    testImplementation presentationTestDependencies.junit
+    testImplementation presentationTestDependencies.mockito
+    testImplementation presentationTestDependencies.assertj
+    testImplementation presentationTestDependencies.robolectric
+    testImplementation 'androidx.arch.core:core-testing:2.0.0'
 }
