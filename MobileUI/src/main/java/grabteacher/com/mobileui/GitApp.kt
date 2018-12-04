@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Created by Huu Hoang on 30/11/2018
  */
-class GitApp : Application(), HasActivityInjector {
+class GitApp : Application(),HasActivityInjector {
 
     @Inject
     lateinit var androidInjector: AndroidInjector<Activity>
