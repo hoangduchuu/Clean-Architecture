@@ -2,7 +2,9 @@ package grabteacher.com.mobileui;
 
 import android.app.Activity
 import android.app.Application
+import android.util.Log
 import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import grabteacher.com.mobileui.di.DaggerApplicationComponent
 import timber.log.Timber
@@ -11,10 +13,13 @@ import javax.inject.Inject
 /**
  * Created by Huu Hoang on 30/11/2018
  */
-class GitApp : Application(), HasActivityInjector {
+class GitApp : Application(),HasActivityInjector {
 
-    @Inject
-    lateinit var androidInjector: AndroidInjector<Activity>
+    @Inject lateinit var androidInjector: DispatchingAndroidInjector<Activity>
+
+    override fun activityInjector(): AndroidInjector<Activity> {
+        return androidInjector
+    }
 
 
     override fun onCreate() {
@@ -25,13 +30,16 @@ class GitApp : Application(), HasActivityInjector {
                 .application(this)
                 .build()
                 .inject(this)
+
+        Log.e("HUUHOANG","loging3")
+
     }
 
     private fun setUpTimber() {
         Timber.plant(Timber.DebugTree())
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> {
-        return  androidInjector
-    }
+//    override fun activityInjector(): AndroidInjector<Activity> {
+//        return  androidInjector
+//    }
 }
